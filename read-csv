@@ -1,0 +1,24 @@
+<?php
+error_reporting(0);
+function readCSV($csvFile){
+    $file_handle = fopen($csvFile, 'r');
+    $row='0';
+    while (!feof($file_handle) ) {
+        $rowdata=fgetcsv($file_handle, 1024);
+        if($row!='0') {
+            $line_of_text[$rowdata[0]] =$rowdata[1];
+        }
+        $row++;
+    }
+    fclose($file_handle);
+    return $line_of_text;
+}
+// Set path to CSV file
+$csvFile = 'data.csv';
+$CountryCode=$_REQUEST['name'];
+$csv = readCSV($csvFile);
+if($csv[$CountryCode]!='')
+    echo $csv[$CountryCode];
+else
+    echo "Country code is not available in csv";
+?>
